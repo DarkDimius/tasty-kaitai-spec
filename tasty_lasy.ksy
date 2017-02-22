@@ -2,6 +2,7 @@ meta:
   id: tasty
   file-extension: tasty
   endian: be
+  ks-version: 0.7
 seq:
   - id: magic
     contents: [0x5C, 0xA1, 0xAB, 0x1F]
@@ -529,7 +530,7 @@ types:
     seq:
      - id: tag
        type: u1
-     - id: pos_steal
+     - id: pos_steal_seq
        type: u1
        if: pos_steal < 0  # always false
 #       enum: ast_tag
@@ -551,7 +552,7 @@ types:
      - id: cat5_payload
        if: (tag >= 128)
        size: cat5_length.value
-     - id: end_steal
+     - id: end_steal_seq
        type: u1
        if: (end_steal < 0) # always false
     instances:
