@@ -235,7 +235,7 @@ types:
      - id: name
        type: name_ref
      - id: type
-       type: ast_trre
+       type: ast_tree
      - id: rhs_modifiers
        type: ast_tree
        repeat: eos
@@ -246,10 +246,285 @@ types:
      - id: typeparam_param_parent_self_stat 
        type: ast_tree
        repeat: eos
+  ast_selfdef:
+    seq:
+      - id: name
+        type: name_ref
+      - id: type
+        type: ast_tree
+  ast_ident:
+    seq:
+      - id: name
+        type: name_ref
+      - id: type
+        type: ast_tree
+  ast_select:
+    seq:
+      - id: sel
+        type: name_ref
+      - id: qual
+        type: ast_tree
+  ast_new:
+    seq: 
+      - id: cls_type
+        type: ast_tree
+  ast_super:
+    seq:
+     - id: length
+       type: nat
+     - id: this_term
+       type: ast_tree
+     - id: mixin 
+       type: ast_tree
+       repeat: eos
+  ast_pair:
+    seq:
+     - id: length
+       type: nat
+     - id: left
+       type: ast_tree
+     - id: right 
+       type: ast_tree
+  ast_typed:
+    seq:
+     - id: length
+       type: nat
+     - id: expr
+       type: ast_tree
+     - id: ascription 
+       type: ast_tree
+  ast_namedarg:
+    seq:
+     - id: length
+       type: nat
+     - id: param_name
+       type: name_ref
+     - id: arg 
+       type: ast_tree
+  ast_assign:
+    seq:
+     - id: length
+       type: nat
+     - id: lhs
+       type: ast_tree
+     - id: rhs 
+       type: ast_tree
+  ast_block:
+    seq:
+     - id: length
+       type: nat
+     - id: expr
+       type: ast_tree
+     - id: stats 
+       type: ast_tree
+       repeat: eos
+  ast_if:
+    seq:
+     - id: length
+       type: nat
+     - id: cond
+       type: ast_tree
+     - id: then 
+       type: ast_tree
+     - id: else 
+       type: ast_tree
+  ast_closure:
+    seq:
+     - id: length
+       type: nat
+     - id: meth
+       type: ast_tree
+     - id: target 
+       type: ast_tree
+     - id: env 
+       type: ast_tree
+       repeat: eos
+  ast_match:
+    seq:
+     - id: length
+       type: nat
+     - id: sel
+       type: ast_tree
+     - id: cases
+       type: ast_tree
+       repeat: eos
+  ast_return:
+    seq:
+     - id: length
+       type: nat
+     - id: method
+       type: ast_tree
+     - id: expr
+       type: ast_tree
+       doc: "Returns unit if absent"
+       repeat: eos
+  ast_try:
+    seq:
+     - id: length
+       type: nat
+     - id: expr
+       type: ast_tree
+     - id: casedefs_finalizer
+       type: ast_tree
+       repeat: eos 
+  ast_repeated:
+    seq:
+     - id: length
+       type: nat
+     - id: elem_type
+       type: ast_tree
+     - id: elems
+       type: ast_tree
+       repeat: eos 
+  ast_bind:
+    seq:
+     - id: length
+       type: nat
+     - id: bound_name
+       type: name_ref
+     - id: pat_type
+       type: ast_tree     
+     - id: pat_term
+       type: ast_tree
+  ast_alternative:
+    seq:
+     - id: length
+       type: nat
+     - id: alts
+       type: ast_tree
+       repeat: eos 
+  ast_unapply:
+    seq:
+     - id: length
+       type: nat
+     - id: fun
+       type: ast_tree
+     - id: implicitargs_pattpe_pat
+       type: ast_tree
+       repeat: eos   
+  #ast_shared:
+  ast_apply:
+    seq:
+     - id: length
+       type: nat
+     - id: fun
+       type: ast_tree
+     - id: args
+       type: ast_tree
+       repeat: eos
+  ast_typeapply:
+    seq:
+     - id: length
+       type: nat
+     - id: fun
+       type: ast_tree
+     - id: args
+       type: ast_tree
+       repeat: eos
+  ast_casedef:
+    seq:
+     - id: length
+       type: nat
+     - id: pat
+       type: ast_tree
+     - id: rhs
+       type: ast_tree
+     - id: guard
+       type: ast_tree
+       repeat: eos
+  ast_implicit_arg:
+   seq: 
+     - id: arg
+       type: ast_tree
+  ast_termref_direct:
+   seq:
+     - id: sym
+       type: ast_ref
+  ast_termref_symbol:
+   seq:
+     - id: sym
+       type: ast_ref
+     - id: qual
+       type: ast_tree
   ast_termref_pkg:
     seq:
      - id: name
        type: name_ref
+  ast_termref:
+    seq:
+     - id: sel
+       type: name_ref
+     - id: qual
+       type: ast_tree
+  ast_this:
+    seq:
+     - id: cls
+       type: ast_tree
+  ast_rec_type:
+    seq:
+     - id: ref
+       type: ast_ref
+  ast_shared:
+    seq:
+     - id: ref
+       type: ast_ref
+       
+  ast_unit_const:
+    doc: "()"
+  ast_false_const:
+    doc: "false"
+  ast_true_const:
+    doc: "true"
+  ast_byte_const:
+    seq:
+     - id: value
+       type: Nat
+  ast_short_const:
+    seq:
+     - id: value
+       type: Nat
+  ast_char_const:
+    seq:
+     - id: value
+       type: Nat
+  ast_int_const:
+    seq:
+     - id: value
+       type: Nat
+  ast_long_const:
+    seq:
+     - id: value
+       type: Nat
+  ast_float_const:
+    seq:
+     - id: value
+       type: Nat
+  ast_double_const:
+    seq:
+     - id: value
+       type: Nat
+  ast_string_const:
+    seq:
+     - id: value
+       type: name_ref
+  ast_null_const:
+    doc: "null"
+  ast_class_const:
+    seq:
+     - id: value
+       type: ast_tree
+  ast_enum_const:
+    seq:
+     - id: value
+       type: ast_tree
+  ast_annotation:
+    seq:
+     - id: length
+       type: nat
+     - type: annot
+       type: ast_tree
+     - type: expr
+       type: ast_tree
   ast_tree:
     seq:
      - id: tag
@@ -340,7 +615,19 @@ types:
             ast_tag::string_const   : ast_string_const
             ast_tag::imported       : ast_imported
             ast_tag::renamed        : ast_renamed
-            # cat3: empty :-)
+            # cat3: 
+            ast_tag::this           : ast_this
+            ast_tag::qualthis       : ast_qualthis
+            ast_tag::class_const    : ast_class_const
+            ast_tag::enum_const     : ast_enum_const
+            ast_tag::byname_type    : ast_byname_type
+            ast_tag::byname_tpt     : ast_byname_tpt
+            ast_tag::new            : ast_new
+            ast_tag::implicit_arg   : ast_implicit_arg
+            ast_tag::private_qualified   : ast_private_qualified
+            ast_tag::protected_qualified : ast_protected_qualified
+            ast_tag::rec_type       : ast_rec_type
+            ast_tag::singleton_tpt  : ast_singleton_type
             # cat4:
             ast_tag::ident          : ast_ident
             ast_tag::ident_tpt      : ast_ident_tpt
@@ -459,6 +746,19 @@ enums:
     77: string_const
     78: imported
     79: renamed
+# trees
+    96: this
+    97: qualthis
+    98: class_const
+    99: enum_const
+    100: byname_type
+    101: byname_tpt
+    102: new
+    103: implicit_arg
+    104: private_qualified
+    105: protected_qualified
+    106: rec_type
+    107: singleton_tpt
 # trees
     112: ident
     113: ident_tpt
