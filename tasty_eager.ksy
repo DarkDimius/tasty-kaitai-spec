@@ -1,5 +1,5 @@
 meta:
-  id: tasty-eager
+  id: tasty_eager
   file-extension: tasty
   endian: be
   ks-version: 0.7
@@ -365,7 +365,7 @@ types:
      - id: args
        type: ast_tree
        repeat: eos
-  ast_typeapply:
+  ast_type_apply:
     seq:
      - id: fun
        type: ast_tree
@@ -577,22 +577,22 @@ types:
   ast_cat5_or_unknown:
     seq:
      - id: cat2_nat
-       if: (_parent.tag >= 64) and (_parent.tag < 96)
+       if: (_parent.tag.to_i >= 64) and (_parent.tag.to_i < 96)
        type: nat
      - id: cat3_ast
-       if: (_parent.tag >= 96) and (_parent.tag < 112)
+       if: (_parent.tag.to_i >= 96) and (_parent.tag.to_i < 112)
        type: ast_tree
      - id: cat4_nat
-       if: (_parent.tag >= 112) and (_parent.tag < 128)
+       if: (_parent.tag.to_i >= 112) and (_parent.tag.to_i < 128)
        type: nat
      - id: cat4_ast
-       if: (_parent.tag >= 112) and (_parent.tag < 128)
+       if: (_parent.tag.to_i >= 112) and (_parent.tag.to_i < 128)
        type: ast_tree
      - id: cat5_length
-       if: (_parent.tag >= 128)
+       if: (_parent.tag.to_i >= 128)
        type: nat
      - id: cat5_tree
-       if: (_parent.tag >= 128) and (_parent.tag < 175)
+       if: (_parent.tag.to_i >= 128) and (_parent.tag.to_i < 175)
        size: cat5_length.value
        type:
           switch-on: _parent.tag
@@ -613,54 +613,54 @@ types:
             ast_tag::assign         : ast_assign
             ast_tag::block          : ast_block
             ast_tag::if             : ast_if
-            ast_tag::lambda         : ast_lambda #
+            #ast_tag::lambda         : ast_lambda #
             ast_tag::match          : ast_match
             ast_tag::return         : ast_return
             ast_tag::try            : ast_try
-            ast_tag::inlined        : ast_inlined #
+            #ast_tag::inlined        : ast_inlined #
             ast_tag::repeated       : ast_repeated
             ast_tag::bind           : ast_bind
             ast_tag::alternative    : ast_alternative
             ast_tag::unapply        : ast_unapply
-            ast_tag::annotated_type : ast_annotated_type #
-            ast_tag::annotated_tpt  : ast_annotated_tpt #
+            #ast_tag::annotated_type : ast_annotated_type #
+            #ast_tag::annotated_tpt  : ast_annotated_tpt #
             ast_tag::casedef        : ast_casedef
             ast_tag::template       : ast_template
             ast_tag::super          : ast_super
-            ast_tag::super_type     : ast_super_type #
-            ast_tag::refiend_type   : ast_refined_type #
-            ast_tag::refined_tpt    : ast_refined_tpt #
-            ast_tag::applied_type   : ast_applied_type #
-            ast_tag::applied_tpt    : ast_applied_tpt #
-            ast_tag::typebounds     : ast_typebounds #
-            ast_tag::typeboundstpt  : ast_typeboundstpt #
-            ast_tag::typealias      : ast_typealias #
-            ast_tag::and_type       : ast_and_type #
-            ast_tag::and_tpt        : ast_and_tpt #
-            ast_tag::or_type        : ast_or_type #
-            ast_tag::or_tpt         : ast_or_tpt #
-            ast_tag::method_type    : ast_method_type #
-            ast_tag::poly_type      : ast_poly_type #
-            ast_tag::poly_tpt       : ast_poly_tpt #
-            ast_tag::param_type     : ast_param_type #
+            #ast_tag::super_type     : ast_super_type #
+            #ast_tag::refiend_type   : ast_refined_type #
+            #ast_tag::refined_tpt    : ast_refined_tpt #
+            #ast_tag::applied_type   : ast_applied_type #
+            #ast_tag::applied_tpt    : ast_applied_tpt #
+            #ast_tag::typebounds     : ast_typebounds #
+            #ast_tag::typeboundstpt  : ast_typeboundstpt #
+            #ast_tag::typealias      : ast_typealias #
+            #ast_tag::and_type       : ast_and_type #
+            #ast_tag::and_tpt        : ast_and_tpt #
+            #ast_tag::or_type        : ast_or_type #
+            #ast_tag::or_tpt         : ast_or_tpt #
+            #ast_tag::method_type    : ast_method_type #
+            #ast_tag::poly_type      : ast_poly_type #
+            #ast_tag::poly_tpt       : ast_poly_tpt #
+            #ast_tag::param_type     : ast_param_type #
             ast_tag::annotation     : ast_annotation
      - id: cat5_payload
-       if: (_parent.tag >= 175)
+       if: (_parent.tag.to_i >= 175)
        size: cat5_length.value
   ast_tree:
     seq:
      - id: tag
        type: u1
-#       enum: ast_tag
+       enum: ast_tag
      - id: decoded
        type:
           switch-on: tag
           cases:
             #cat1
-            ast_tag::unit_const    : ast_unit
-            ast_tag::false_const   : ast_false
-            ast_tag::true_const    : ast_true
-            ast_tag::null_const    : ast_null
+            ast_tag::unit_const    : ast_unit_const
+            ast_tag::false_const   : ast_false_const
+            ast_tag::true_const    : ast_true_const
+            ast_tag::null_const    : ast_null_const
             ast_tag::private       : ast_private 
             ast_tag::internal      : ast_internal 
             ast_tag::protected     : ast_protected 
@@ -681,7 +681,7 @@ types:
             ast_tag::mutable       : ast_mutable 
             ast_tag::label         : ast_label 
             ast_tag::field_accessor: ast_field_accessor 
-            ast_tag::case_accessor : ast_case_case_accessor 
+            ast_tag::case_accessor : ast_case_accessor 
             ast_tag::covariant     : ast_covariant 
             ast_tag::contravariant : ast_contravariant 
             ast_tag::scala2x       : ast_scala2x 
